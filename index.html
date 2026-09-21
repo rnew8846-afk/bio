@@ -11,11 +11,42 @@
       gtag('js', new Date());
       gtag('config', 'G-KPM9RH2MP5');
     </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaid Note book</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            /* ===== نظام الألوان: أساس أبيض/أسود + لمسات متدرجة ===== */
+            --black-0:   #020203;
+            --black-1:   #08090c;
+            --black-2:   #0e0f14;
+            --line:      rgba(255,255,255,0.09);
+            --line-soft: rgba(255,255,255,0.05);
+            --white-0:   #f6f6f8;
+            --white-1:   #c9cad2;
+            --white-2:   #7d7f8c;
+
+            /* لمسات لونية متعددة تُستخدم كتدرّج بحت، لا كألوان مساحية */
+            --grad-a: #7c5cff;  /* بنفسجي */
+            --grad-b: #22d3ee;  /* سماوي */
+            --grad-c: #ff5da2;  /* وردي */
+            --grad-d: #ffb347;  /* كهرماني */
+
+            --gradient-main: linear-gradient(120deg, var(--grad-a), var(--grad-b) 45%, var(--grad-c) 75%, var(--grad-d));
+            --gradient-line: linear-gradient(90deg, var(--grad-a), var(--grad-b), var(--grad-c));
+
+            --font-display: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+        }
+
+        * { box-sizing: border-box; }
+
         img.emoji {
             height: 1em;
             width: 1em;
@@ -23,102 +54,256 @@
             vertical-align: -0.1em;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+        html { scroll-padding-top: 24px; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-            background: linear-gradient(160deg, #020408 0%, #0a1628 50%, #0d1f3c 100%);
+            font-family: var(--font-display);
+            background: var(--black-0);
+            background-image:
+                radial-gradient(circle at 12% 8%, rgba(124,92,255,0.16), transparent 42%),
+                radial-gradient(circle at 88% 18%, rgba(34,211,238,0.13), transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(255,93,162,0.10), transparent 45%);
+            background-attachment: fixed;
             min-height: 100vh;
-            color: #cde4f5;
+            color: var(--white-0);
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 32px 20px 140px;
         }
 
-        /* تصميم مشغل الموسيقى - ستايل آيفون */
+        .container { max-width: 560px; width: 100%; }
+
+        /* ===== الترويسة ===== */
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            margin-top: 12px;
+            position: relative;
+        }
+
+        header .eyebrow-line {
+            width: 56px;
+            height: 3px;
+            margin: 0 auto 20px;
+            border-radius: 3px;
+            background: var(--gradient-line);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+            background: var(--gradient-main);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        header p.tagline {
+            font-size: 0.95rem;
+            color: var(--white-2);
+            margin: 0;
+        }
+
+        /* ===== بطاقات المنشورات ===== */
+        #loading-msg {
+            text-align: center;
+            color: var(--white-2);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            padding: 40px 0;
+        }
+
+        .post {
+            position: relative;
+            background: linear-gradient(180deg, var(--black-2), var(--black-1));
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 22px 22px 24px;
+            margin-bottom: 18px;
+            transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .post::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: var(--gradient-line);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px -20px rgba(0,0,0,0.7);
+        }
+
+        .post:hover::before { opacity: 1; }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 14px;
+        }
+
+        .avatar-ring {
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+            padding: 2px;
+            background: var(--gradient-main);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--black-0);
+            border: 2px solid var(--black-1);
+            display: block;
+        }
+
+        .author-info { display: flex; flex-direction: column; }
+        .author-name { font-weight: 700; color: var(--white-0); font-size: 1rem; }
+
+        .post-date {
+            font-size: 0.75rem;
+            color: var(--white-2);
+            font-family: var(--font-mono);
+            display: none !important;
+        }
+
+        .post-text {
+            line-height: 1.75;
+            font-size: 1.02rem;
+            color: var(--white-1);
+            white-space: pre-wrap;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            display: block;
+        }
+
+        footer {
+            margin-top: 46px;
+            font-size: 0.78rem;
+            color: var(--white-2);
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== مشغل الموسيقى بستايل آيفون ===== */
         #ios-player {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             width: 320px;
-            background: rgba(30, 100, 180, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(30, 100, 180, 0.3);
+            max-width: calc(100vw - 32px);
+            background: rgba(14, 15, 20, 0.72);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid var(--line);
             border-radius: 20px;
             padding: 12px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            box-shadow: 0 12px 36px 0 rgba(0,0,0,0.65);
             z-index: 9999;
             direction: ltr;
         }
 
         .player-content { display: flex; align-items: center; gap: 12px; }
-        .player-album-art { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
-        .player-info { flex-grow: 1; overflow: hidden; }
-        .player-title { font-weight: 600; font-size: 0.9rem; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .player-sub { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
-        #play-pause-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
-        .player-progress-container { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.2); border-radius: 2px; margin-top: 10px; position: relative; }
-        #progress-bar { height: 100%; width: 0%; background: #60a5fa; border-radius: 2px; }
 
-        .container { max-width: 500px; width: 100%; }
-
-        header { text-align: center; margin-bottom: 40px; margin-top: 20px; }
-        header h1 { font-size: 1.8rem; color: #93c5fd; margin-bottom: 5px; }
-
-        .post {
-            background-color: rgba(10, 22, 40, 0.7);
-            border: 1px solid #1e3a5f;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        .post:hover { border-color: #60a5fa; }
-
-        .post-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-
-        .avatar {
+        .player-album-art {
             width: 45px;
             height: 45px;
-            border-radius: 50%;
+            border-radius: 8px;
             object-fit: cover;
-            border: 2px solid #1e3a5f;
-            background-color: #050d18;
+            border: 1px solid var(--line);
         }
 
-        .author-info { display: flex; flex-direction: column; }
-        .author-name { font-weight: bold; color: #eff6ff; font-size: 1rem; }
+        .player-info { flex-grow: 1; overflow: hidden; }
 
-        .post-date {
-            font-size: 0.75rem;
-            color: #4a6fa0;
-            display: none !important;
+        .player-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--white-0);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .post-text { line-height: 1.6; font-size: 1.05rem; color: #dbeafe; white-space: pre-wrap; }
-        .post-image { width: 100%; border-radius: 8px; margin-top: 15px; border: 1px solid #1e3a5f; }
+        .player-sub { font-size: 0.75rem; color: var(--white-2); }
 
-        footer { margin-top: 50px; font-size: 0.8rem; color: #1e3a5f; }
-        #loading-msg { text-align: center; color: #4a6fa0; }
+        #play-pause-btn {
+            background: none;
+            border: none;
+            color: var(--white-0);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 2px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-line);
+            border-radius: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .post { transition: none; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
+            <div class="eyebrow-line"></div>
             <h1>Zaid room</h1>
+            <p class="tagline">دفتر ملاحظات زيد</p>
         </header>
         <div id="dynamic-posts">
             <p id="loading-msg">جاري تحميل المنشورات وتصحيح التوقيت...</p>
         </div>
     </div>
 
-    <footer> © 2026 from zaid </footer>
+    <footer>© 2026 from zaid</footer>
 
     <script>
         async function fetchDynamicPosts() {
@@ -135,7 +320,7 @@
                 for (const file of mdFiles) {
                     const postRes = await fetch(file.download_url);
                     const content = await postRes.text();
-                    
+
                     const title = (content.match(/title:\s*["']?(.*?)["']?(\r?\n|$)/))?.[1] || "صديق";
                     let dateStr = (content.match(/date:\s*(.*?)(\r?\n|$)/))?.[1] || "";
                     const avatar = (content.match(/avatar:\s*(.*?)(\r?\n|$)/))?.[1] || 'zaidpfp.jpeg';
@@ -161,12 +346,14 @@
 
                 postsData.sort((a, b) => b.date - a.date);
 
-                dynamicContainer.innerHTML = ""; 
+                dynamicContainer.innerHTML = "";
                 postsData.forEach(post => {
                     const postHtml = `
                         <div class="post">
                             <div class="post-header">
-                                <img src="${post.avatar}" class="avatar" onerror="this.src='zaidpfp.jpeg'">
+                                <div class="avatar-ring">
+                                    <img src="${post.avatar}" class="avatar" onerror="this.src='zaidpfp.jpeg'">
+                                </div>
                                 <div class="author-info">
                                     <span class="author-name">${post.title}</span>
                                     <span class="post-date">${post.dateDisplay}</span>
