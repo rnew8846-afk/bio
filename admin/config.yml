@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: z08id-coder/bio
+  repo: rnew8846-afk/bio
   branch: main
   base_url: https://static-cms-auth.vercel.app
   auth_endpoint: /api/auth
