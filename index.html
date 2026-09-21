@@ -14,7 +14,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rania</title>
+    <title>Zaid Note book</title>
     <style>
         img.emoji {
             height: 1em;
@@ -111,7 +111,7 @@
 
     <div class="container">
         <header>
-            <h1>Rania Room</h1>
+            <h1>Zaid room</h1>
         </header>
         <div id="dynamic-posts">
             <p id="loading-msg">جاري تحميل المنشورات وتصحيح التوقيت...</p>
@@ -123,7 +123,8 @@
     <script>
         async function fetchDynamicPosts() {
             const dynamicContainer = document.getElementById('dynamic-posts');
-            const apiUrl = `https://api.github.com/repos/z08id-coder/bio/contents/_posts`;
+            // تم تحديث اسم المستخدم إلى rnew8846-afk
+            const apiUrl = `https://api.github.com/repos/rnew8846-afk/bio/contents/_posts`;
 
             try {
                 const response = await fetch(apiUrl);
